@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class FlyAtPlayer : MonoBehaviour
 {
+    [SerializeField] float speed = 1.0f;
     [SerializeField] Transform player;
     Vector3 playerPosition;
     void Start()
@@ -12,6 +14,20 @@ public class FlyAtPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, playerPosition, 1f * Time.deltaTime);
+        MoveToPlayer();
+        DestroyWhenReached();
+    }
+
+    void DestroyWhenReached()
+    {
+        if (transform.position == playerPosition)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void MoveToPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, playerPosition, speed * Time.deltaTime);
     }
 }
